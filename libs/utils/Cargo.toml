@@ -1,0 +1,13 @@
+[package]
+name = "axum_graphql_utils"
+version = "0.1.0"
+edition = "2021"
+authors = ["Hao <objdev@outlook.com>"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.72"
+figment = { version = "0.10.10", features = ["env", "toml"] }
+once_cell = "1.18.0"
+serde = { version = "1.0.183", features = ["derive"] }

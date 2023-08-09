@@ -1,5 +1,5 @@
 [workspace]
-members = ["backend"]
+members = ["backend", "libs/*"]
 
 [profile.release]
 strip = true      # Automatically strip symbols from the binary.

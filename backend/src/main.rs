@@ -1,7 +1,8 @@
 //! GraphQL API server.
 #![forbid(unsafe_code)]
 
-use graphql_backend::DEFAULT_TRACING_LEVEL;
+use axum_graphql_backend::DEFAULT_TRACING_LEVEL;
+use axum_graphql_utils::config::get_config;
 use std::env;
 use tracing_subscriber::{prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt};
 
@@ -17,6 +18,13 @@ async fn main() {
         ))
         .with(tracing_subscriber::fmt::layer())
         .init();
+
+    let config = get_config();
+
+    info!(
+        "Address of GraphQL API server: {}",
+        config.server.listen_addr
+    );
 
     info!("Starting GraphQL API server...");
 }
