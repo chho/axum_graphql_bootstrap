@@ -44,3 +44,18 @@ impl Config {
 pub fn get_config() -> &'static Config {
     &CONFIG
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn config_new() {
+        assert!(Config::new().is_ok());
+    }
+
+    #[tokio::test]
+    async fn config_get() {
+        get_config();
+    }
+}
