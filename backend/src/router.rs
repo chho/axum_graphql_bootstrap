@@ -41,3 +41,4 @@ pub async fn health_check() -> impl IntoResponse {
 pub async fn graphiql() -> impl IntoResponse {
     Html(GraphiQLSource::build().endpoint("/graphql").finish())
 }
+
