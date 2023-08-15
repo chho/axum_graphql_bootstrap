@@ -1,7 +1,9 @@
 use std::sync::Arc;
 
 use async_graphql::http::GraphiQLSource;
+use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
 use axum::{
+    extract::State,
     response::{Html, IntoResponse},
     routing::get,
     Router,
@@ -15,7 +17,7 @@ use crate::{AppState, DEFAULT_TRACING_LEVEL};
 pub async fn get_router(state: Arc<AppState>) -> Router {
     Router::new()
         .route("/health", get(health_check))
-        .route("/graphql", get(graphiql))
+        .route("/gapi", get(graphiql).post(graphql_handler))
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(trace::DefaultMakeSpan::new().level(DEFAULT_TRACING_LEVEL))
@@ -39,6 +41,13 @@ pub async fn health_check() -> impl IntoResponse {
 /// GraphQL API webkit for dev testing.
 /// It would be commented out in product mode.
 pub async fn graphiql() -> impl IntoResponse {
-    Html(GraphiQLSource::build().endpoint("/graphql").finish())
+    Html(GraphiQLSource::build().endpoint("/gapi").finish())
 }
 
+/// Handler for GraphQL requests.
+pub async fn graphql_handler(
+    State(state): State<Arc<AppState>>,
+    req: GraphQLRequest,
+) -> GraphQLResponse {
+    state.schema.execute(req.into_inner()).await.into()
+}

@@ -12,12 +12,13 @@ axum = "0.6.20"
 tokio = { version = "1.29.1", features = ["full"] }
 tracing = "0.1.37"
 tracing-subscriber = { version = "0.3.17", features = ["fmt", "env-filter"] }
-axum_graphql_utils = { path = "../libs/utils" }
 serde_json = "1.0.104"
 tower-http = { version = "0.4.3", features = ["trace"] }
 hyper = "0.14.27"
 async-graphql = { version = "6.0.1", features = ["chrono"] }
 async-graphql-axum = "6.0.1"
+axum_graphql_utils = { path = "../libs/utils" }
+axum_graphql_domains = { path = "../libs/domains" }
 
 [dev-dependencies]
 rusty-hook = "0.11.2"
