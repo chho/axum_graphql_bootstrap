@@ -2,9 +2,8 @@
 #![forbid(unsafe_code)]
 
 use anyhow::{Ok, Result};
-use axum_graphql_backend::{graphql::get_schema, run, AppState, DEFAULT_TRACING_LEVEL};
-use axum_graphql_utils::config::get_config;
-use std::{env, sync::Arc};
+use axum_graphql_backend::{run, DEFAULT_TRACING_LEVEL};
+use std::env;
 use tracing_subscriber::{prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt};
 
 #[macro_use]
@@ -20,11 +19,7 @@ async fn main() -> Result<()> {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
-    let config = get_config();
-    let schema = get_schema().await?;
-    let state = Arc::new(AppState::new(config, schema).await?);
-
-    let server = run(state).await?;
+    let server = run().await?;
 
     info!("Server is starting on http://{}", server.local_addr());
 

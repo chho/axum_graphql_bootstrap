@@ -8,8 +8,8 @@ use std::{net::TcpListener, sync::Arc};
 
 use anyhow::{Ok, Result};
 use axum::{routing::IntoMakeService, Router, Server};
-use axum_graphql_utils::config::Config;
-use graphql::GraphQLSchema;
+use axum_graphql_utils::config::{get_config, Config};
+use graphql::{get_schema, GraphQLSchema};
 use hyper::server::conn::AddrIncoming;
 use router::get_router;
 
@@ -24,13 +24,22 @@ pub struct AppState {
 
 impl AppState {
     /// Create a new application state instance with config file.
-    pub async fn new(config: &'static Config, schema: GraphQLSchema) -> Result<Self> {
+    pub async fn new() -> Result<Self> {
+        // get the configuration.
+        let config = get_config();
+
+        // get the GraphQL schema.
+        let schema = get_schema().await?;
+
         Ok(Self { config, schema })
     }
 }
 
 /// Run the application server.
-pub async fn run(state: Arc<AppState>) -> Result<Server<AddrIncoming, IntoMakeService<Router>>> {
+pub async fn run() -> Result<Server<AddrIncoming, IntoMakeService<Router>>> {
+    // Application state initialization.
+    let state = Arc::new(AppState::new().await?);
+
     let route = get_router(state.clone()).await;
 
     let addr = format!(
