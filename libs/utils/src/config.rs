@@ -19,10 +19,23 @@ pub struct Server {
     pub listen_port: u16,
 }
 
+/// Database settings.
+#[derive(Serialize, Deserialize, Clone)]
+pub struct Database {
+    /// Database type: postgres, mysql, sqlite.
+    pub db_type: String,
+
+    /// Database connection string.
+    /// username:password@host:port/database.
+    /// database file name.
+    pub db_conn: String,
+}
+
 /// Application configuration settings.
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Config {
     pub server: Server,
+    pub database: Database,
 }
 
 impl Config {

@@ -1,3 +1,12 @@
 [server]
 listen_addr = "127.0.0.1"
 listen_port = 10011
+
+# https://localhost/{app_url}.
+# can be keeping empty.
+app_url = ""
+graphql_url = "gapi"
+
+[database]
+db_type = "sqlite"
+db_conn = "database/datacenter.db"
