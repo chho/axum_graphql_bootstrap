@@ -2,11 +2,14 @@
 listen_addr = "127.0.0.1"
 listen_port = 10011
 
-# https://localhost/{app_url}.
-# can be keeping empty.
-app_url = ""
-graphql_url = "gapi"
+# https://localhost{app_url}{graphql_url}.
+# app_url can be keeping empty. They must be start with '/'.
+app_url = "/api"
+graphql_url = "/gapi"
 
 [database]
+# sqlite://sqlite.db
+# postgres://postgres:password@localhost/test
+# {db_type}://{db_conn}
 db_type = "sqlite"
 db_conn = "database/datacenter.db"

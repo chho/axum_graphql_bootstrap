@@ -4,23 +4,29 @@ use figment::{
     Figment,
 };
 use once_cell::sync::Lazy;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
 /// The `Config` instance initiallization.
 static CONFIG: Lazy<Config> = Lazy::new(|| Config::new().expect("Unable to load config."));
 
 /// Application server settings.
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Deserialize, Clone)]
 pub struct Server {
     /// the address to listen on.
     pub listen_addr: String,
 
     /// the port to listen on.
     pub listen_port: u16,
+
+    /// the application root url.
+    pub app_url: String,
+
+    /// GraphQL url.
+    pub graphql_url: String,
 }
 
 /// Database settings.
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Deserialize, Clone)]
 pub struct Database {
     /// Database type: postgres, mysql, sqlite.
     pub db_type: String,
@@ -32,7 +38,7 @@ pub struct Database {
 }
 
 /// Application configuration settings.
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Deserialize, Clone)]
 pub struct Config {
     pub server: Server,
     pub database: Database,

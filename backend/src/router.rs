@@ -17,7 +17,10 @@ use crate::{AppState, DEFAULT_TRACING_LEVEL};
 pub async fn get_router(state: Arc<AppState>) -> Router {
     Router::new()
         .route("/health", get(health_check))
-        .route("/gapi", get(graphiql).post(graphql_handler))
+        .route(
+            state.config.server.graphql_url.as_str(),
+            get(graphiql).post(graphql_handler),
+        )
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(trace::DefaultMakeSpan::new().level(DEFAULT_TRACING_LEVEL))
@@ -40,8 +43,18 @@ pub async fn health_check() -> impl IntoResponse {
 /// GraphiQL handler.
 /// GraphQL API webkit for dev testing.
 /// It would be commented out in product mode.
-pub async fn graphiql() -> impl IntoResponse {
-    Html(GraphiQLSource::build().endpoint("/gapi").finish())
+pub async fn graphiql(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    Html(
+        GraphiQLSource::build()
+            .endpoint(
+                format!(
+                    "{}{}",
+                    state.config.server.app_url, state.config.server.graphql_url
+                )
+                .as_str(),
+            )
+            .finish(),
+    )
 }
 
 /// Handler for GraphQL requests.

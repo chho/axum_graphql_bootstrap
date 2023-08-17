@@ -6,9 +6,6 @@ use axum_graphql_backend::{run, DEFAULT_TRACING_LEVEL};
 use std::env;
 use tracing_subscriber::{prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt};
 
-#[macro_use]
-extern crate tracing;
-
 /// GraphQL API backend application server entry point.
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -20,8 +17,6 @@ async fn main() -> Result<()> {
         .init();
 
     let server = run().await?;
-
-    info!("Server is starting on http://{}", server.local_addr());
 
     server.await?;
 
