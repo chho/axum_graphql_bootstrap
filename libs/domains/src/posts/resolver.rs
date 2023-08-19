@@ -1,7 +1,6 @@
 use std::sync::Arc;
 
 use async_graphql::{Context, Object, Result};
-use chrono::Utc;
 
 use super::{
     model::{InputPost, Post},
