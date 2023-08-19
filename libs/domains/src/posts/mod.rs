@@ -3,3 +3,4 @@
 //! Model, Service, Resolver, Test.
 pub mod model;
 pub mod resolver;
+pub mod service;

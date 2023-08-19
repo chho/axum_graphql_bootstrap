@@ -19,6 +19,14 @@ async-graphql = { version = "6.0.1", features = ["chrono"] }
 async-graphql-axum = "6.0.1"
 axum_graphql_utils = { path = "../libs/utils" }
 axum_graphql_domains = { path = "../libs/domains" }
+sqlx = { version = "0.7.1", features = [
+    "chrono",
+    "json",
+    "macros",
+    "sqlite",
+    "runtime-tokio-rustls",
+    "uuid",
+] }
 
 [dev-dependencies]
 rusty-hook = "0.11.2"

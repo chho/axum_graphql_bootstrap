@@ -7,7 +7,17 @@ authors = ["Hao <objdev@outlook.com>"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0.75"
 async-graphql = { version = "6.0.1", features = ["chrono"] }
+async-trait = "0.1.73"
 chrono = { version = "0.4.26", features = ["serde"] }
 serde = { version = "1.0.183", features = ["derive"] }
+sqlx = { version = "0.7.1", features = [
+    "chrono",
+    "json",
+    "macros",
+    "sqlite",
+    "runtime-tokio-rustls",
+    "uuid",
+] }
 tracing = "0.1.37"

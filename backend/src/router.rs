@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use async_graphql::http::GraphiQLSource;
 use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
 use axum::{
@@ -9,6 +7,7 @@ use axum::{
     Router,
 };
 use serde_json::json;
+use std::sync::Arc;
 use tower_http::trace::{self, TraceLayer};
 
 use crate::{AppState, DEFAULT_TRACING_LEVEL};

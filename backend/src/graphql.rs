@@ -1,6 +1,14 @@
+use std::sync::Arc;
+
 use anyhow::Result;
 use async_graphql::{EmptySubscription, MergedObject, Schema};
-use axum_graphql_domains::posts::resolver::{PostMutation, PostQuery};
+use axum_graphql_domains::{
+    posts::{
+        resolver::{PostMutation, PostQuery},
+        service::{DefaultPostsService, PostsService},
+    },
+    DBPool,
+};
 
 /// GraphQL top-level query.
 #[derive(MergedObject, Default)]
@@ -14,6 +22,12 @@ pub struct Mutation(PostMutation);
 pub type GraphQLSchema = Schema<Query, Mutation, EmptySubscription>;
 
 /// `GraphQLSchema` initialization.
-pub async fn get_schema() -> Result<GraphQLSchema> {
-    Ok(Schema::build(Query::default(), Mutation::default(), EmptySubscription).finish())
+pub async fn get_schema(dbpool: Arc<DBPool>) -> Result<GraphQLSchema> {
+    let postservice: Arc<dyn PostsService> = Arc::new(DefaultPostsService::new(dbpool));
+
+    Ok(
+        Schema::build(Query::default(), Mutation::default(), EmptySubscription)
+            .data(postservice)
+            .finish(),
+    )
 }
