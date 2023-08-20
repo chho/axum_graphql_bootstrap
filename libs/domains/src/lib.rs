@@ -5,7 +5,7 @@ use sqlx::{Pool, Sqlite};
 
 pub mod posts;
 
-#[macro_use]
-extern crate tracing;
+// #[macro_use]
+// extern crate tracing;
 
 pub struct DBPool(pub Pool<Sqlite>);
