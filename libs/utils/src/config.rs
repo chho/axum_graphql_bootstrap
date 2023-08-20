@@ -69,12 +69,12 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn config_new() {
+    async fn test_new() {
         assert!(Config::new().is_ok());
     }
 
     #[tokio::test]
-    async fn config_get() {
+    async fn test_get_config() {
         get_config();
     }
 }
