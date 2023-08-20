@@ -1,0 +1,9 @@
+{
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": true
+    },
+    "rust-analyzer.cargo.features": "all"
+}
