@@ -1,4 +1,4 @@
-name: axum_graphql_bootstrap
+name: build
 
 on:
   push:
