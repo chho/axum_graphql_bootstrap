@@ -11,7 +11,6 @@ use axum_graphql_utils::config::{get_config, Config};
 use graphql::{get_schema, GraphQLSchema};
 use hyper::server::conn::AddrIncoming;
 use router::get_router;
-use sqlx::sqlite::SqlitePoolOptions;
 use std::{net::TcpListener, sync::Arc};
 
 #[macro_use]
@@ -40,14 +39,7 @@ impl AppState {
         let db_url = format!("{}://{}", config.database.db_type, config.database.db_conn);
         debug!(db_url);
 
-        // specified the database type.
-        // need to be changed to other database type.
-        let dbpool = Arc::new(DBPool(
-            SqlitePoolOptions::new()
-                .max_connections(5)
-                .connect(db_url.as_str())
-                .await?,
-        ));
+        let dbpool = Arc::new(DBPool::new(db_url.as_str()).await?);
 
         // get the GraphQL schema.
         let schema = get_schema(dbpool.clone()).await?;
