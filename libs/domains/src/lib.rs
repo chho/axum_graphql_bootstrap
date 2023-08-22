@@ -9,6 +9,8 @@ pub mod posts;
 // #[macro_use]
 // extern crate tracing;
 
+const DB_URL: &str = "sqlite://../../database/testing.db";
+
 /// Database pool.
 /// In case database type related code to spread around.
 /// When database type changes, only need to change this code.
@@ -27,6 +29,11 @@ impl DBPool {
                 .await?,
         ))
     }
+
+    /// Create a new database pool for testing.
+    pub async fn new_test() -> Result<Self> {
+        Self::new(DB_URL).await
+    }
 }
 
 #[cfg(test)]
@@ -35,8 +42,6 @@ mod tests {
 
     #[tokio::test]
     async fn test_new() {
-        let db_url = "sqlite://../../database/testing.db";
-
-        assert!(DBPool::new(db_url).await.is_ok());
+        assert!(DBPool::new(DB_URL).await.is_ok());
     }
 }
