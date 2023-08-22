@@ -46,7 +46,7 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn test_new() {
+    async fn test_dbpool_new() {
         assert!(DBPool::new(DB_SUB_URL).await.is_ok());
     }
 }

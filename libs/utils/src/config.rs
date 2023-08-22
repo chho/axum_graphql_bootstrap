@@ -69,7 +69,7 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn test_new() {
+    async fn test_config_new() {
         assert!(Config::new().is_ok());
     }
 
