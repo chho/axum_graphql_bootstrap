@@ -35,10 +35,10 @@ impl AppState {
         let config = get_config();
 
         // initialize the database.
-        info!("Initializing database connection...");
+        debug!("Initializing database connection...");
 
         let db_url = format!("{}://{}", config.database.db_type, config.database.db_conn);
-        info!(db_url);
+        debug!(db_url);
 
         // specified the database type.
         // need to be changed to other database type.
