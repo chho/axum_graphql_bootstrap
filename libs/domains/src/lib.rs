@@ -12,6 +12,7 @@ pub mod posts;
 /// Database pool.
 /// In case database type related code to spread around.
 /// When database type changes, only need to change this code.
+#[derive(Debug)]
 pub struct DBPool(pub Pool<Sqlite>);
 
 impl DBPool {
@@ -25,5 +26,17 @@ impl DBPool {
                 .connect(db_url)
                 .await?,
         ))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_new() {
+        let db_url = "sqlite://../../database/testing.db";
+
+        assert!(DBPool::new(db_url).await.is_ok());
     }
 }

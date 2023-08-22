@@ -310,6 +310,7 @@ dependencies = [
  "chrono",
  "serde",
  "sqlx",
+ "tokio",
  "tracing",
  "uuid",
 ]
