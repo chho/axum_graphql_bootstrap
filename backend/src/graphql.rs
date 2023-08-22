@@ -31,3 +31,15 @@ pub async fn get_schema(dbpool: Arc<DBPool>) -> Result<GraphQLSchema> {
             .finish(),
     )
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_get_schema() {
+        let db_pool = Arc::new(DBPool::new_test(true).await.unwrap());
+
+        assert!(get_schema(db_pool).await.is_ok());
+    }
+}

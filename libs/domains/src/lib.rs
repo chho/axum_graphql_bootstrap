@@ -9,7 +9,8 @@ pub mod posts;
 // #[macro_use]
 // extern crate tracing;
 
-const DB_URL: &str = "sqlite://../../database/testing.db";
+const DB_ROOT_URL: &str = "sqlite://../database/testing.db";
+const DB_SUB_URL: &str = "sqlite://../../database/testing.db";
 
 /// Database pool.
 /// In case database type related code to spread around.
@@ -31,8 +32,12 @@ impl DBPool {
     }
 
     /// Create a new database pool for testing.
-    pub async fn new_test() -> Result<Self> {
-        Self::new(DB_URL).await
+    pub async fn new_test(is_root: bool) -> Result<Self> {
+        if is_root {
+            Self::new(DB_ROOT_URL).await
+        } else {
+            Self::new(DB_SUB_URL).await
+        }
     }
 }
 
@@ -42,6 +47,6 @@ mod tests {
 
     #[tokio::test]
     async fn test_new() {
-        assert!(DBPool::new(DB_URL).await.is_ok());
+        assert!(DBPool::new(DB_SUB_URL).await.is_ok());
     }
 }
