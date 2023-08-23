@@ -7,26 +7,20 @@ authors = ["Hao <objdev@outlook.com>"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.72"
-axum = "0.6.20"
-tokio = { version = "1.29.1", features = ["full"] }
-tracing = "0.1.37"
-tracing-subscriber = { version = "0.3.17", features = ["fmt", "env-filter"] }
-serde_json = "1.0.104"
-tower-http = { version = "0.4.3", features = ["trace"] }
-hyper = "0.14.27"
-async-graphql = { version = "6.0.1", features = ["chrono"] }
-async-graphql-axum = "6.0.1"
+anyhow = { workspace = true }
+axum = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+serde_json = { workspace = true }
+tower-http = { workspace = true }
+hyper = { workspace = true }
+async-graphql = { workspace = true }
+async-graphql-axum = { workspace = true }
+sqlx = { workspace = true }
+
 axum_graphql_utils = { path = "../libs/utils" }
 axum_graphql_domains = { path = "../libs/domains" }
-sqlx = { version = "0.7.1", features = [
-    "chrono",
-    "json",
-    "macros",
-    "sqlite",
-    "runtime-tokio-rustls",
-    "uuid",
-] }
 
 [dev-dependencies]
 rusty-hook = "0.11.2"
