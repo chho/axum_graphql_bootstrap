@@ -51,3 +51,43 @@ impl PostsService for DefaultPostsService {
         Ok(post)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_postsservice_new() {
+        let dbpool = Arc::new(DBPool::new_test(false).await.unwrap());
+
+        DefaultPostsService::new(dbpool);
+    }
+
+    #[tokio::test]
+    async fn test_postsservice_get() {
+        let dbpool = Arc::new(DBPool::new_test(false).await.unwrap());
+
+        let posts = DefaultPostsService::new(dbpool);
+
+        let post = posts
+            .get("bc05c1f1-9c0c-44ff-9b92-9e4d010f23c8")
+            .await
+            .unwrap();
+
+        assert_eq!("title_testing", post.title);
+    }
+
+    #[tokio::test]
+    async fn test_postsservice_create() {
+        let dbpool = Arc::new(DBPool::new_test(false).await.unwrap());
+
+        let posts = DefaultPostsService::new(dbpool);
+
+        let inputpost = InputPost {
+            title: "title_testing".to_string(),
+            content: "content_testing".to_string(),
+        };
+
+        posts.create(inputpost).await.unwrap();
+    }
+}
